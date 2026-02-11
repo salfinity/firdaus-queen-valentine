@@ -172,13 +172,19 @@
         <button id="noBtn" onclick="sayNo()">NO ❤️</button>
       </div>
     </div>
+    <audio id="loveMusic" loop>
+      <source src="daima.mpeg" type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
 
     <div id="homePage">
       <div class="homeContent">
         <h1>Yayyyyy!!! 💍💖</h1>
         <h2>You just made me the happiest man alive 😍</h2>
         <p>I love you so much ❤️</p>
-
+        <button onclick="toggleMusic()" class="musicBtn">
+          🎵 Play/Pause Music
+        </button>
         <button onclick="openWhyPage()" class="whyBtn">Here is why...</button>
       </div>
     </div>
@@ -294,6 +300,21 @@
           currentSlide = slides.length - 1;
         }
         showSlide(currentSlide);
+      }
+      function toggleMusic() {
+        let music = document.getElementById("loveMusic");
+        if (music.paused) {
+          music.play();
+        } else {
+          music.pause();
+        }
+      }
+      function sayYes() {
+        document.getElementById("questionPage").style.display = "none";
+        document.getElementById("homePage").style.display = "block";
+
+        // Play romantic music
+        document.getElementById("loveMusic").play();
       }
     </script>
   </body>
