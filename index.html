@@ -139,20 +139,35 @@
 
       .sliderNav {
         position: absolute;
-        bottom: 40px;
+        bottom: 80px; /* moved higher */
         width: 100%;
         text-align: center;
         z-index: 3;
-      }
-
-      .sliderNav button {
-        padding: 10px 20px;
-        font-size: 20px;
-        margin: 0 10px;
+    }
+    
+    .navBtn, .homeBtn {
+        padding: 15px 20px;
+        font-size: 24px;
+        margin: 0 15px;
         border: none;
-        border-radius: 50px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: #ff4d6d;
         cursor: pointer;
-      }
+        transition: transform 0.2s, background-color 0.2s;
+    }
+    
+    .navBtn:hover, .homeBtn:hover {
+        transform: scale(1.2);
+        background-color: #ff4d6d;
+        color: white;
+    }
+    
+    .homeBtn {
+        border-radius: 30px;
+        padding: 12px 25px;
+        font-size: 20px;
+    }
       .videoBg {
         position: absolute;
         width: 100%;
@@ -239,9 +254,11 @@
 
       <!-- Navigation -->
       <div class="sliderNav">
-        <button onclick="prevSlide()">⬅</button>
-        <button onclick="nextSlide()">➡</button>
-      </div>
+        <button class="navBtn" onclick="prevSlide()">⬅</button>
+        
+        <button class="homeBtn" onclick="goHome()">🏠 Home</button>
+        
+        <button class="navBtn" onclick="nextSlide()">➡</button>
     </div>
 
     <script>
@@ -315,6 +332,10 @@
 
         // Play romantic music
         document.getElementById("loveMusic").play();
+      }
+      function goHome() {
+        document.getElementById("homePage").style.display = "block";
+        document.getElementById("whyPage").style.display = "none";
       }
     </script>
   </body>
