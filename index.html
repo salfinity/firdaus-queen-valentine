@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Be My Valentine ❤️</title>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+        overflow: hidden;
+      }
+
+      .container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        color: white;
+        margin: 50px 0;
+      }
+      h2 {
+        font-size: 2rem;
+        color: rgb(119, 3, 3);
+      }
+
+      .buttons {
+        margin-top: 30px;
+      }
+
+      button {
+        padding: 15px 30px;
+        font-size: 20px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 10px;
+      }
+
+      #yesBtn {
+        background-color: #28a745;
+        color: white;
+      }
+
+      #noBtn {
+        background-color: #dc3545;
+        color: white;
+      }
+
+      /* HOME PAGE WITH BACKGROUND IMAGE */
+      #homePage {
+        display: none;
+        height: 100vh;
+        position: relative;
+        background: url("FIRDAUS.jpeg") center/cover no-repeat;
+        color: white;
+      }
+
+      /* Pink overlay */
+      #homePage::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: pink;
+        opacity: 0.1; /* 👈 10% opacity */
+      }
+
+      /* Content above overlay */
+      .homeContent {
+        position: relative;
+        z-index: 1;
+        padding-top: 100px;
+      }
+
+      .whyBtn {
+        margin-top: 20px;
+        padding: 12px 25px;
+        font-size: 18px;
+        border-radius: 30px;
+        border: none;
+        background-color: white;
+        color: #ff4d6d;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+
+      .whyBtn:hover {
+        transform: scale(1.1);
+      }
+
+      .whyPage {
+        display: none;
+        position: relative;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+      }
+
+      .slide.active {
+        display: flex;
+      }
+
+      .overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 105, 180, 0.3); /* soft pink overlay */
+      }
+
+      .slideContent {
+        position: relative;
+        z-index: 2;
+        padding: 20px;
+        font-size: 1.8rem;
+        max-width: 80%;
+      }
+
+      .sliderNav {
+        position: absolute;
+        bottom: 40px;
+        width: 100%;
+        text-align: center;
+        z-index: 3;
+      }
+
+      .sliderNav button {
+        padding: 10px 20px;
+        font-size: 20px;
+        margin: 0 10px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+      }
+      .videoBg {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container" id="questionPage">
+      <h1>FIRDAUS💖BABY</h1>
+      <h2>Will you Be My Valentine? 💖</h2>
+
+      <div class="buttons">
+        <button id="yesBtn" onclick="sayYes()">YES 💚</button>
+        <button id="noBtn" onclick="sayNo()">NO ❤️</button>
+      </div>
+    </div>
+
+    <div id="homePage">
+      <div class="homeContent">
+        <h1>Yayyyyy!!! 💍💖</h1>
+        <h2>You just made me the happiest man alive 😍</h2>
+        <p>I love you so much ❤️</p>
+
+        <button onclick="openWhyPage()" class="whyBtn">Here is why...</button>
+      </div>
+    </div>
+
+    <div id="whyPage" class="whyPage">
+      <div class="slide">
+        <video autoplay muted loop class="videoBg">
+          <source src="a.mp4" type="video/mp4" />
+        </video>
+        <div class="overlay"></div>
+        <div class="slideContent">
+          <h1>Your smile makes my whole day brighter ☀️</h1>
+        </div>
+      </div>
+
+      <div
+        class="slide"
+        style="background: url('b.jpeg') center/cover no-repeat"
+      >
+        <div class="overlay"></div>
+        <div class="slideContent">
+          <h1>You understand me in ways no one else does 💞</h1>
+        </div>
+      </div>
+      <div class="slide">
+        <video autoplay muted loop class="videoBg">
+          <source src="c.mp4" type="video/mp4" />
+        </video>
+        <div class="overlay"></div>
+        <div class="slideContent">
+          <h1>You support my dreams and believe in me 💪</h1>
+        </div>
+      </div>
+      <div class="slide">
+        <video autoplay muted loop class="videoBg">
+          <source src="d.mp4" type="video/mp4" />
+        </video>
+        <div class="overlay"></div>
+        <div class="slideContent">
+          <h1>Your kindness and heart are unmatched ❤️</h1>
+        </div>
+      </div>
+      <div class="slide">
+        <video autoplay muted loop class="videoBg">
+          <source src="e.mp4" type="video/mp4" />
+        </video>
+        <div class="overlay"></div>
+        <div class="slideContent">
+          <h1>You make life feel magical ✨</h1>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="sliderNav">
+        <button onclick="prevSlide()">⬅</button>
+        <button onclick="nextSlide()">➡</button>
+      </div>
+    </div>
+
+    <script>
+      let noCount = 0;
+      const maxNoClicks = 5; // 👈 Reduced to 5
+
+      function sayNo() {
+        noCount++;
+
+        let yesBtn = document.getElementById("yesBtn");
+        let noBtn = document.getElementById("noBtn");
+
+        if (noCount <= maxNoClicks) {
+          yesBtn.style.transform = "scale(" + (1 + noCount * 0.2) + ")";
+          noBtn.style.transform = "scale(" + (1 - noCount * 0.15) + ")";
+
+          if (noCount === maxNoClicks) {
+            noBtn.style.display = "none";
+          }
+        }
+      }
+
+      function sayYes() {
+        document.getElementById("questionPage").style.display = "none";
+        document.getElementById("homePage").style.display = "block";
+      }
+
+      function openWhyPage() {
+        document.getElementById("homePage").style.display = "none";
+        document.getElementById("whyPage").style.display = "block";
+      }
+
+      function goBack() {
+        document.getElementById("whyPage").style.display = "none";
+        document.getElementById("homePage").style.display = "block";
+      }
+      let currentSlide = 0;
+      const slides = document.querySelectorAll(".slide");
+
+      function showSlide(index) {
+        slides.forEach((slide) => slide.classList.remove("active"));
+        slides[index].classList.add("active");
+      }
+
+      function nextSlide() {
+        currentSlide++;
+        if (currentSlide >= slides.length) {
+          currentSlide = 0;
+        }
+        showSlide(currentSlide);
+      }
+
+      function prevSlide() {
+        currentSlide--;
+        if (currentSlide < 0) {
+          currentSlide = slides.length - 1;
+        }
+        showSlide(currentSlide);
+      }
+    </script>
+  </body>
+</html>
