@@ -200,7 +200,7 @@
         <button onclick="toggleMusic()" class="musicBtn">
           🎵 Play/Pause Music
         </button>
-        <button onclick="openWhyPage()" class="whyBtn">Here is why...</button>
+        <button onclick="checkPassword()" class="whyBtn">Here is why...</button>
       </div>
     </div>
 
@@ -337,6 +337,22 @@
         document.getElementById("homePage").style.display = "block";
         document.getElementById("whyPage").style.display = "none";
       }
+      function checkPassword() {
+        // Ask for password
+        let pw = prompt("Enter the secret password:");
+    
+        // Check if correct
+        if (pw === "Mulhat&Kiyan@26") {
+            // Correct → show why page
+            document.getElementById("homePage").style.display = "none";
+            document.getElementById("whyPage").style.display = "block";
+        } else if (pw === null) {
+            // User pressed cancel
+            return;
+        } else {
+            alert("Incorrect password 😢 Try again!");
+        }
+    }
     </script>
   </body>
 </html>
