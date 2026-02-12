@@ -29,7 +29,7 @@
       }
       h2 {
         font-size: 2rem;
-        color: rgb(119, 3, 3);
+        color: rgb(252, 146, 17);
       }
 
       .buttons {
@@ -111,15 +111,19 @@
         position: absolute;
         width: 100%;
         height: 100%;
-        display: none;
+        display: flex;
         justify-content: center;
         align-items: center;
         text-align: center;
         color: white;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+        pointer-events: none;
       }
-
+      
       .slide.active {
-        display: flex;
+        opacity: 1;
+        pointer-events: auto;
       }
 
       .overlay {
@@ -174,10 +178,118 @@
         height: 100%;
         object-fit: cover;
       }
+      .dots {
+        margin-top: 20px;
+      }
+      
+      .dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        margin: 0 6px;
+        background-color: white;
+        border-radius: 50%;
+        opacity: 0.5;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      
+      .dot.active {
+        opacity: 1;
+        background-color: #ff4d6d;
+        transform: scale(1.3);
+      }
+      .typing {
+        border-right: 2px solid white;
+        animation: blink 0.7s infinite;
+      }
+      
+      @keyframes blink {
+        0% { border-color: white; }
+        50% { border-color: transparent; }
+        100% { border-color: white; }
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.7);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      
+      .modalContent {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        text-align: center;
+        width: 300px;
+        animation: fadeIn 0.5s ease;
+      }
+      
+      .modalContent input {
+        width: 80%;
+        padding: 10px;
+        margin: 15px 0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+      }
+      
+      .modalContent button {
+        background-color: #ff4d6d;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+      }
+      
+      #errorText {
+        color: red;
+        font-size: 14px;
+      }
+      
+      @keyframes fadeIn {
+        from {opacity: 0; transform: scale(0.8);}
+        to {opacity: 1; transform: scale(1);}
+      }
+      .hearts {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: 0;
+      }
+      
+      .heart {
+        position: absolute;
+        bottom: -20px;
+        font-size: 20px;
+        animation: float 8s linear infinite;
+        color: pink;
+      }
+      
+      @keyframes float {
+        0% { transform: translateY(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+      }
     </style>
   </head>
 
+  <div id="passwordModal" class="modal">
+    <div class="modalContent">
+      <h2>Enter Secret Password 💖</h2>
+      <input type="password" id="passwordInput" placeholder="Enter password..." />
+      <button onclick="submitPassword()">Unlock ❤️</button>
+      <p id="errorText"></p>
+    </div>
+  </div>
+
   <body>
+    <div class="hearts"></div>
     <div class="container" id="questionPage">
       <h1>FIRDAUS💖BABY</h1>
       <h2>Will you Be My Valentine? 💖</h2>
@@ -205,13 +317,13 @@
     </div>
 
     <div id="whyPage" class="whyPage">
-      <div class="slide">
+      <div class="slide active">
         <video autoplay muted loop class="videoBg">
           <source src="a.mp4" type="video/mp4" />
         </video>
         <div class="overlay"></div>
         <div class="slideContent">
-          <h1>Your smile makes my whole day brighter ☀️</h1>
+          <h1 class="typing" data-text="Your smile makes my whole day brighter☀️"></h1>
         </div>
       </div>
 
@@ -221,7 +333,7 @@
       >
         <div class="overlay"></div>
         <div class="slideContent">
-          <h1>You understand me in ways no one else does 💞</h1>
+          <h1 class="typing" data-text="You understand me in ways no one else does 💞"></h1>
         </div>
       </div>
       <div class="slide">
@@ -230,7 +342,7 @@
         </video>
         <div class="overlay"></div>
         <div class="slideContent">
-          <h1>You support my dreams and believe in me 💪</h1>
+          <h1 class="typing" data-text="You support my dreams and believe in me 💪"></h1>
         </div>
       </div>
       <div class="slide">
@@ -239,7 +351,7 @@
         </video>
         <div class="overlay"></div>
         <div class="slideContent">
-          <h1>Your kindness and heart are unmatched ❤️</h1>
+          <h1 class="typing" data-text="Your kindness and heart are unmatched ❤️"></h1>
         </div>
       </div>
       <div class="slide">
@@ -248,7 +360,7 @@
         </video>
         <div class="overlay"></div>
         <div class="slideContent">
-          <h1>You make life feel magical ✨</h1>
+          <h1 class="typing" data-text="You make life feel magical ✨"></h1>
         </div>
       </div>
 
@@ -256,9 +368,11 @@
       <div class="sliderNav">
         <button class="navBtn" onclick="prevSlide()">⬅</button>
         
-        <button class="homeBtn" onclick="goHome()">🏠 Home</button>
+        <button class="homeBtn" onclick="goHome()">Home</button>
         
         <button class="navBtn" onclick="nextSlide()">➡</button>
+
+        <div class="dots" id="dotsContainer"></div>
     </div>
 
     <script>
@@ -281,11 +395,7 @@
         }
       }
 
-      function sayYes() {
-        document.getElementById("questionPage").style.display = "none";
-        document.getElementById("homePage").style.display = "block";
-      }
-
+     
       function openWhyPage() {
         document.getElementById("homePage").style.display = "none";
         document.getElementById("whyPage").style.display = "block";
@@ -318,6 +428,39 @@
         }
         showSlide(currentSlide);
       }
+
+      const dotsContainer = document.getElementById("dotsContainer");
+
+slides.forEach((_, index) => {
+  const dot = document.createElement("span");
+  dot.classList.add("dot");
+  dot.addEventListener("click", () => {
+    currentSlide = index;
+    showSlide(currentSlide);
+    updateDots();
+  });
+  dotsContainer.appendChild(dot);
+});
+
+function updateDots() {
+  const dots = document.querySelectorAll(".dot");
+  dots.forEach(dot => dot.classList.remove("active"));
+  dots[currentSlide].classList.add("active");
+}
+
+function showSlide(index) {
+  slides.forEach(slide => slide.classList.remove("active"));
+  slides[index].classList.add("active");
+  updateDots();
+
+  // Trigger typing if slide has typing text
+  const typingElement = slides[index].querySelector(".typing");
+  if (typingElement) {
+    typeEffect(typingElement);
+  }
+}
+
+showSlide(currentSlide);
       function toggleMusic() {
         let music = document.getElementById("loveMusic");
         if (music.paused) {
@@ -338,21 +481,50 @@
         document.getElementById("whyPage").style.display = "none";
       }
       function checkPassword() {
-        // Ask for password
-        let pw = prompt("Enter the secret password:");
-    
-        // Check if correct
+        document.getElementById("passwordModal").style.display = "flex";
+      }
+      
+      function submitPassword() {
+        const pw = document.getElementById("passwordInput").value;
+        const errorText = document.getElementById("errorText");
+      
         if (pw === "Mulhat&Kiyan@26") {
-            // Correct → show why page
-            document.getElementById("homePage").style.display = "none";
-            document.getElementById("whyPage").style.display = "block";
-        } else if (pw === null) {
-            // User pressed cancel
-            return;
+          document.getElementById("passwordModal").style.display = "none";
+          document.getElementById("homePage").style.display = "none";
+          document.getElementById("whyPage").style.display = "block";
         } else {
-            alert("Incorrect password 😢 Try again!");
+          errorText.textContent = "Incorrect password 😢";
         }
+      }
+    function typeEffect(element) {
+      const text = element.getAttribute("data-text");
+      element.textContent = "";
+      let i = 0;
+    
+      function typing() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(typing, 50);
+        }
+      }
+    
+      typing();
     }
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = 5 + Math.random() * 5 + "s";
+      document.querySelector(".hearts").appendChild(heart);
+    
+      setTimeout(() => {
+        heart.remove();
+      }, 8000);
+    }
+    
+    setInterval(createHeart, 500);
     </script>
   </body>
 </html>
